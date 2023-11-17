@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day-1 Challange</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="color"],
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="color"] {
+            width: 50%;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Background Color Changer</h1>
+
+        <label for="colorPicker">Pick a color: </label>
+        <br>
+        <input type="color" id="colorPicker" oninput="updateBackgroundColor(event)">
+        <br>
+        <label for="input">Enter color code</label>
+        <br>
+        <input type="text" id="input" name="input" placeholder="Enter color (e.g., #fff, rgb, rgba,red)"
+            oninput="updateBackgroundColor(event)">
+
+
+
+    </div>
+
+    <script>
+        function updateBackgroundColor(event) {
+            const value = event.target.value;
+            document.body.style.backgroundColor = value;
+            container.style.backgroundColor = value
+        }
+
+
+    </script>
+
+</body>
+
+</html>
