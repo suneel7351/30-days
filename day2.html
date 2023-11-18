@@ -21,7 +21,8 @@
         #clock {
             font-size: 3em;
             letter-spacing: 5px;
-            animation: colorChange 5s infinite alternate, scaleUp 1s ease-in-out infinite alternate;
+            transition: all 1s ease-in-out;
+            animation: colorChange 5s infinite alternate, scaleUp 1s ease-in-out infinite alternate, boxShadow 2s infinite alternate, shake 0.5s infinite alternate;
         }
 
         @keyframes colorChange {
@@ -41,6 +42,30 @@
 
             100% {
                 transform: scale(1.1);
+            }
+        }
+
+        @keyframes boxShadow {
+            0% {
+                box-shadow: 0 0 10px rgba(198, 131, 215, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(198, 131, 215, 1);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25%, 75% {
+                transform: translateX(-1px);
+            }
+
+            50% {
+                transform: translateX(1px);
             }
         }
     </style>
