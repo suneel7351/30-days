@@ -21,7 +21,27 @@
         #clock {
             font-size: 3em;
             letter-spacing: 5px;
-            animation: colorChange 5s infinite alternate;
+            animation: colorChange 5s infinite alternate, scaleUp 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% {
+                color: #C683D7;
+            }
+
+            100% {
+                color: #E87EAC;
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
         }
     </style>
 </head>
@@ -36,7 +56,6 @@
             let minutes = now.getMinutes();
             let seconds = now.getSeconds();
 
-            console.log(hours,minutes,seconds);
             hours = hours < 10 ? `0${hours}` : hours;
             minutes = minutes < 10 ? `0${minutes}` : minutes;
             seconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -44,10 +63,7 @@
             document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
         }
 
-
         setInterval(updateClock, 1000);
-
-
     </script>
 </body>
 
