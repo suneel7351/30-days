@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Switcher</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .toggle-container {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .theme-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 0 5px;
+      cursor: pointer;
+      /* border: 1px solid gray; */
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .light-mode {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+
+    .dark-mode {
+      background-color: #212529;
+      color: #f8f9fa;
+    }
+
+    .blue-theme {
+      background-color: #007bff;
+      color: #ffffff;
+      /* Text color for better visibility */
+    }
+
+    .red-theme {
+      background-color: #dc3545;
+      color: #ffffff;
+    }
+
+    .green-theme {
+      background-color: #28a745;
+      color: #ffffff;
+    }
+
+    .purple-theme {
+      background-color: #6f42c1;
+      color: #ffffff;
+    }
+
+    .orange-theme {
+      background-color: #fd7e14;
+      color: #ffffff;
+    }
+
+    .yellow-theme {
+      background-color: #ffc107;
+      color: #212529;
+      /* Dark text color for better visibility */
+    }
+
+    
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    #toggleSwitch {
+      display: none;
+    }
+
+    #toggleLabel {
+      background-color: #555; /* Initial dark color for the toggle button */
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #toggleSwitch:checked + #toggleLabel {
+      background-color: #ddd; /* Light color when the toggle is switched */
+      color: #333;
+    }
+  </style>
+</head>
+
+<body class="light-mode">
+  <div class="container">
+    <div class="toggle-container">
+      <input type="checkbox" id="toggleSwitch">
+      <label for="toggleSwitch" id="toggleLabel">Dark</label>
+    </div>
+    <h1>Theme Switcher</h1>
+
+    <div class="toggle-container">
+      <div class="theme-circle light-mode" onclick="toggleTheme('light-mode')"></div>
+      <div class="theme-circle dark-mode" onclick="toggleTheme('dark-mode')"></div>
+      <div class="theme-circle blue-theme" onclick="toggleTheme('blue-theme')"></div>
+      <div class="theme-circle red-theme" onclick="toggleTheme('red-theme')"></div>
+      <div class="theme-circle green-theme" onclick="toggleTheme('green-theme')"></div>
+      <div class="theme-circle purple-theme" onclick="toggleTheme('purple-theme')"></div>
+      <div class="theme-circle orange-theme" onclick="toggleTheme('orange-theme')"></div>
+      <div class="theme-circle yellow-theme" onclick="toggleTheme('yellow-theme')"></div>
+    </div>
+
+    <p>This is a simple webpage with a light/dark mode toggle and multiple themes.</p>
+  </div>
+
+  <script>
+    document.getElementById('toggleSwitch').addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode');
+      document.getElementById("toggleLabel").innerText = this.checked ? "Light" : "Dark";
+    });
+
+    function toggleTheme(theme) {
+      document.body.className = theme;
+      document.getElementById("toggleLabel").innerText = theme.includes("dark") ? "Dark" : "Light";
+    }
+  </script>
+</body>
+
+</html>
