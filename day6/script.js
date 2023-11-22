@@ -12,7 +12,7 @@ function addTask() {
         const li = document.createElement("li");
         li.innerHTML = `
             <span>${taskText}</span>
-            <div style="display:flex; gap:10px;">
+            <div style="display:flex; gap:10px;align-items:center;">
                 <input class="check" type="checkbox" onchange="toggleTaskCompletion(this)">
                 <button onclick="removeTask(this)" class="dlBtn">Delete</button>
             </div>
