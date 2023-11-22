@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Dynamic Photo Gallery</title>
+</head>
+<body>
+    <div class="gallery" id="gallery">
+      
+    </div>
+
+    <!-- Use <dialog> for the modal -->
+    <dialog class="modal" id="modal">
+      <span class="close" id="closeBtn" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImage">
+      <button class="prev" id="prevBtn" onclick="changeImage(-1)">&#10094;</button>
+      <button class="next" id="nextBtn" onclick="changeImage(1)">&#10095;</button>
+    </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
