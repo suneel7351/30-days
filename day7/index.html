@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #timer {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      padding: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 1em;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    #intervalCheckbox {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <label for="date">Select a date and time:</label>
+    <input type="datetime-local" id="date" required>
+
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+
+    <input type="checkbox" id="intervalCheckbox"> Repeat Intervals
+
+    <div id="timer">00:00:00:00</div>
+  </div>
+
+  <script>
+    let timer;
+    let isInterval = false;
+
+    function startTimer() {
+      const selectedDate = new Date(document.getElementById('date').value);
+      const currentDate = new Date();
+
+      const timeDifference = selectedDate - currentDate;
+      let totalTimeInSeconds = Math.floor(timeDifference / 1000);
+
+      if (totalTimeInSeconds > 0) {
+        updateTimer(totalTimeInSeconds); // Update immediately before setting the interval
+        if (isInterval) {
+          timer = setInterval(function () {
+            updateTimer(totalTimeInSeconds);
+            totalTimeInSeconds--;
+          }, 1000);
+        } else {
+          timer = setTimeout(() => {
+            alert('Countdown finished!');
+            clearInterval(timer);
+          }, totalTimeInSeconds * 1000);
+        }
+      } else {
+        alert('Please select a future date and time.');
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      clearTimeout(timer);
+    }
+
+    function updateTimer(totalTimeInSeconds) {
+      const display = document.getElementById('timer');
+      const days = Math.floor(totalTimeInSeconds / (3600 * 24));
+      const hours = Math.floor((totalTimeInSeconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
+      const seconds = totalTimeInSeconds % 60;
+
+      display.textContent = `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (totalTimeInSeconds === 0 && !isInterval) {
+        alert('Countdown finished!');
+        clearInterval(timer);
+      } else if (totalTimeInSeconds === 0 && isInterval) {
+        // Restart the timer for repeated intervals
+        startTimer();
+      }
+    }
+
+    document.getElementById('intervalCheckbox').addEventListener('change', function() {
+      isInterval = this.checked;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palindrome Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Palindrome Checker</h1>
+
+  <label for="inputString">Enter a string:</label>
+  <input type="text" id="inputString" placeholder="Type here...">
+
+  <button onclick="checkPalindrome()">Check</button>
+
+  <p id="result"></p>
+
+  <script>
+    function isPalindrome(str) {
+      // Remove non-alphanumeric characters and convert to lowercase
+      const cleanStr = str.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+
+      // Compare the cleaned string with its reverse
+      return cleanStr === cleanStr.split('').reverse().join('');
+    }
+
+    function checkPalindrome() {
+      // Get input value from the user
+      const inputString = document.getElementById('inputString').value;
+
+      // Check if the input is a valid string
+      if (typeof inputString === 'string' || inputString instanceof String) {
+        // Call the isPalindrome function and display the result
+        const result = isPalindrome(inputString);
+        document.getElementById('result').textContent = result
+          ? 'It is a palindrome!'
+          : 'It is not a palindrome.';
+      } else {
+        // Handle non-string inputs gracefully
+        document.getElementById('result').textContent = 'Please enter a valid string.';
+      }
+    }
+  </script>
+
+</body>
+</html>
