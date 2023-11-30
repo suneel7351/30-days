@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>FizzBuzz Game</title>
+</head>
+<body>
+
+  <div class="container">
+    <h1>FizzBuzz Game</h1>
+    <div class="settings">
+      <label for="startRange">Start Range:</label>
+      <input type="number" id="startRange" min="1" value="1">
+      <label for="endRange">End Range:</label>
+      <input type="number" id="endRange" min="1" value="100">
+      <label for="multiple1">Multiple 1:</label>
+      <input type="number" id="multiple1" min="1" value="3">
+      <label for="word1">Replacement Word 1:</label>
+      <input type="text" id="word1" value="Coder's">
+      <label for="word1">Replacement Word 1 Color:</label>
+      <input type="color" id="color1" value="#3498db">
+
+
+      <label for="multiple2">Multiple 2:</label>
+      <input type="number" id="multiple2" min="1" value="5">
+      <label for="word2">Replacement Word 2:</label>
+      <input type="text" id="word2" value="Gyan">
+      <label for="word2">Replacement Word 2 Color:</label>
+      <input type="color" id="color2" value="#2ecc71">
+      <button onclick="runFizzBuzz(event)">Play</button>
+
+    </div>
+    <h1>Result</h1>
+    <div id="result" class="result">
+      
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
