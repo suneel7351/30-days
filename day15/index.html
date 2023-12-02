@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background-color: #f4f4f4;
+            padding: 2rem;
+        }
+
+        #file-input-container {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        #file-upload-area {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 5px;
+            width: 300px;
+            text-align: center;
+            border: 2px dashed #3498db;
+            cursor: pointer;
+        }
+
+        #file-upload-icon {
+            width: 40px;
+            margin-bottom: 0px;
+        }
+
+        #file-upload-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        #file-upload-area:hover {
+            border-color: #2980b9;
+        }
+
+        #file-names {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .file-info {
+            width: 310px;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 1rem;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-preview {
+            width: 300px;
+            height: 400px; 
+            object-fit: contain;
+            margin-top: 10px;
+        }
+
+        #clear-button {
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #clear-button:hover {
+            background-color: #c0392b;
+        }
+       
+    </style>
+    <title>File Input Display Program</title>
+</head>
+<body>
+    <div id="file-input-container">
+        <label for="file-input" id="file-upload-area">
+            <img id="file-upload-icon" src="upload.svg" alt="upload icon">
+            <p id="file-upload-text">Drag and drop files here<br>or click to choose files</p>
+        </label>
+        <input type="file" id="file-input" multiple>
+    </div>
+
+    <div id="file-names"></div>
+
+    <button id="clear-button">Clear Selection</button>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fileInput = document.getElementById('file-input');
+            const fileNamesContainer = document.getElementById('file-names');
+            const clearButton = document.getElementById('clear-button');
+            const fileUploadArea = document.getElementById('file-upload-area');
+            const fileContainer = document.createElement('div');
+            fileContainer.style.display = 'flex';
+            fileContainer.style.flexWrap = 'wrap';
+            fileContainer.style.gap = '2rem';
+            fileContainer.style.justifyContent="center"
+    
+            fileInput.addEventListener('change', handleFileSelect);
+            clearButton.addEventListener('click', clearFileSelection);
+    
+            fileUploadArea.addEventListener('click', function (e) {
+                e.preventDefault()
+                fileInput.click();
+            });
+    
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.style.border = '2px dashed #2980b9';
+            });
+    
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.style.border = '2px dashed #3498db';
+            });
+    
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect();
+                fileUploadArea.style.border = '2px dashed #3498db';
+            });
+    
+            function handleFileSelect() {
+                const files = fileInput.files;
+                fileContainer.innerHTML = ''; 
+    
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileInfo = `${file.name} (${formatBytes(file.size)}) - ${file.type}`;
+    
+                    const fileElement = document.createElement('div');
+                    fileElement.classList.add('file-info');
+                    fileElement.textContent = fileInfo;
+    
+                    if (file.type.startsWith('image/')) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = URL.createObjectURL(file);
+                        imgElement.alt = file.name;
+                        imgElement.classList.add('file-preview');
+    
+                        fileElement.appendChild(imgElement);
+                    } else if (file.type === 'application/pdf') {
+                        const pdfLink = document.createElement('a');
+                        pdfLink.href = URL.createObjectURL(file);
+                        pdfLink.textContent = 'Open PDF';
+                        pdfLink.target = '_blank';
+                        fileElement.appendChild(pdfLink);
+                    }
+    
+                    fileContainer.appendChild(fileElement);
+                }
+    
+                fileNamesContainer.innerHTML = '';
+                fileNamesContainer.appendChild(fileContainer);
+            }
+    
+            function clearFileSelection() {
+                fileInput.value = '';
+                fileContainer.innerHTML = '';
+            }
+    
+            function formatBytes(bytes, decimals = 2) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+        });
+    </script>
+</body>
+</html>
