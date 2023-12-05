@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Light Show</title>
+  <style>
+    body {
+      background-color: #191c33;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      animation: blinkBackground 1s infinite alternate;
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @keyframes blinkBackground {
+  0% {
+    background-color: #191c33;
+  }
+
+  20% {
+    background-color: #0c1446;
+  }
+
+  /* 20% {
+    background-color: #2d304f;
+  } */
+
+  /* 30% {
+    background-color: #1e1f36;
+  } */
+
+  40% {
+    background-color: #0f0f1c;
+  }
+
+  /* 50% {
+    background-color: #242437;
+  } */
+
+  60% {
+    background-color: #131423;
+  }
+
+  /* 70% {
+    background-color: #35415a;
+  } */
+
+  80% {
+    background-color: #1a2331;
+  }
+
+  /* 90% {
+    background-color: #0e0f18;
+  } */
+
+  100% {
+    background-color: #2c2f47;
+  }
+}
+
+
+    #lights-container {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .light {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    #controls {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button,
+    input[type="range"] {
+      margin: 0 10px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    label {
+      font-size: 16px;
+      color: white;
+    }
+
+    @keyframes firework {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-150px) rotate(0deg);
+        opacity: 0;
+      }
+    }
+
+    /* .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: #ff0015;
+      border-radius: 50%;
+      animation: firework 1s ease-in-out;
+    } */
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="lights-container"></div>
+    <div id="controls">
+      <button onclick="startStopLights()" style="width: 160px;">Start/Stop</button>
+      <label for="speed">Speed: </label>
+      <input type="range" id="speed" min="100" max="1000" step="100" value="500" onchange="changeSpeed(this.value)">
+    </div>
+  </div>
+
+  <audio id="audio" src="toon.mp3" loop></audio>
+
+  <script>
+    const lightsContainer = document.getElementById('lights-container');
+    const controlButton = document.querySelector('button');
+    const speedInput = document.getElementById('speed');
+    const audio = document.getElementById('audio');
+    let lightsInterval;
+    let patternIndex = 0;
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function createLight() {
+      const light = document.createElement('div');
+      light.className = 'light';
+      return light;
+    }
+
+    function createLights(numLights) {
+      for (let i = 0; i < numLights; i++) {
+        const light = createLight();
+        lightsContainer.appendChild(light);
+      }
+    }
+
+    function createFirework() {
+      const firework = document.createElement('div');
+      firework.className = 'firework';
+      document.body.appendChild(firework);
+
+      
+      firework.addEventListener('animationend', () => {
+        firework.remove();
+      });
+    }
+
+    function changeLightsColor() {
+      const lights = document.querySelectorAll('.light');
+
+     
+      const colors = [
+        "#FF0000", 
+        "#00FF00", 
+        "#0000FF", 
+        "#FFFF00",
+        "#FF00FF", 
+        "#00FFFF",
+        "#FFFFFF",
+        "#000000"  
+      ];
+
+      lights.forEach((light, index) => {
+        light.style.backgroundColor = colors[(index + patternIndex) % colors.length];
+        light.style.transform = "scale(1.2)"; 
+
+        createFirework(light);
+      });
+
+      patternIndex = (patternIndex + 1) % colors.length;
+    }
+
+    function createFirework(light) {
+      const firework = document.createElement('div');
+      firework.className = 'firework';
+      document.body.appendChild(firework);
+
+
+      const lightRect = light.getBoundingClientRect();
+      const fireworkRect = firework.getBoundingClientRect();
+
+      const offsetX = lightRect.left + lightRect.width / 2 - fireworkRect.width / 2;
+      const offsetY = lightRect.top + lightRect.height / 2 - fireworkRect.height / 2;
+
+      firework.style.left = `${offsetX}px`;
+      firework.style.top = `${offsetY}px`;
+
+      firework.addEventListener('animationend', () => {
+        firework.remove();
+      });
+    }
+
+    function startStopLights() {
+      if (lightsInterval) {
+        clearInterval(lightsInterval);
+        lightsInterval = null;
+        controlButton.textContent = 'Start';
+        audio.pause();
+      } else {
+        lightsInterval = setInterval(changeLightsColor, speedInput.value);
+        controlButton.textContent = 'Stop';
+        audio.play();
+      }
+    }
+
+    function changeSpeed(value) {
+      if (lightsInterval) {
+        clearInterval(lightsInterval);
+        lightsInterval = setInterval(changeLightsColor, value);
+      }
+    }
+
+ 
+    createLights(10);
+  </script>
+
+</body>
+
+</html>
