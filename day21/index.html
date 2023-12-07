@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic CSS with JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .child {
+            padding: 1rem;
+            background-color: #fdf7f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+        }
+
+        #dynamicElement {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            margin: 20px;
+            padding: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        button {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .child-inp {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type="number"] {
+            padding: 6px;
+        }
+
+        input {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 100%;
+            width: 200px;
+        }
+
+        button {
+            padding: 6px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        .width{
+            width: 90px;
+        }
+        .btn{
+         margin-top: 33px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="dynamicElement">Click the buttons to change style!</div>
+    <div class="container">
+
+        <div class="child">
+            <div>
+                <label for="colorInput">Color:</label>
+                <div class="child-inp">
+                    <input type="color" id="colorInput">
+                    <button onclick="changeColor()">Change Color</button>
+                </div>
+            </div>
+            <div>
+                <label for="bgColorInput">Background Color:</label>
+                <div class="child-inp">
+                    <input type="color" id="bgColorInput">
+                    <button onclick="changeBackgroundColor()">Background</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="child-inp">
+                 <div>
+                    <label for="widthInput">Width:</label>
+                    <input class="width" type="number" id="widthInput" value="200">
+                 </div>
+                    
+                   <div>
+                    <label for="heightInput">Height:</label>
+                    <input class="width" type="number" id="heightInput" value="100">
+                   </div>
+                    <button class="btn" onclick="changeSize()">Change Size</button>
+                </div>
+            </div>
+
+            <div>
+                <label for="borderInput">Border Color:</label>
+                <div class="child-inp">
+                    <input type="color" id="borderInput">
+                    <button onclick="addBorder()">Add Border</button>
+                </div>
+            </div>
+
+        
+            <button onclick="resetStyles()">Reset Styles</button>
+        </div>
+    </div>
+
+    <script>
+       const dynamicElement = document.getElementById('dynamicElement');
+        const colorInput = document.getElementById('colorInput');
+        const bgColorInput = document.getElementById('bgColorInput');
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const borderInput = document.getElementById('borderInput');
+
+        const originalStyles = {
+            color: dynamicElement.style.color,
+            backgroundColor: dynamicElement.style.backgroundColor,
+            width: dynamicElement.style.width,
+            height: dynamicElement.style.height,
+            border: dynamicElement.style.border,
+        };
+
+        function setStyles() {
+            dynamicElement.style.color = colorInput.value;
+            dynamicElement.style.fontSize = sizeInput.value + 'px';
+            dynamicElement.style.border = '2px solid ' + borderInput.value;
+        }
+
+        function changeColor() {
+            dynamicElement.style.color = colorInput.value;
+        }
+
+        function changeBackgroundColor() {
+            dynamicElement.style.backgroundColor = bgColorInput.value;
+        }
+        function changeSize() {
+        dynamicElement.style.width = widthInput.value + 'px';
+        dynamicElement.style.height = heightInput.value + 'px';
+    }
+
+        function addBorder() {
+            dynamicElement.style.border = '2px solid ' + borderInput.value;
+        }
+
+        function resetStyles() {
+            dynamicElement.style.color = originalStyles.color;
+            dynamicElement.style.backgroundColor = originalStyles.backgroundColor;
+            dynamicElement.style.width = originalStyles.width;
+            dynamicElement.style.height = originalStyles.height;
+            dynamicElement.style.border = originalStyles.border;
+            dynamicElement.style.textAlign = originalStyles.textAlign;
+            dynamicElement.style.lineHeight = originalStyles.lineHeight;
+            dynamicElement.style.margin = originalStyles.margin;
+
+    
+            colorInput.value = originalStyles.color;
+            sizeInput.value = parseInt(originalStyles.fontSize);
+            borderInput.value = originalStyles.border;
+        }
+    </script>
+
+</body>
+
+</html>
