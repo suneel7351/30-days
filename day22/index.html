@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotated Cube</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #111525;
+            color: white;
+            flex-wrap: wrap;
+        }
+        .div-1{
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .cube-container {
+            perspective: 800px;
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+
+        }
+
+        .cube,
+        .cube-2 {
+            position: relative;
+            transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            transform: rotateX(45deg) rotateY(45deg);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            border: 2px solid #fff;
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 0.6;
+        }
+
+
+
+        .cube .skillFaces-1 {
+            transform: translate3d(0, 0, 110px);
+            background-color: #3498db;
+        }
+
+        .cube .skillFaces-2 {
+            transform: rotateY(180deg) translate3d(0, 0, 115px);
+            background-color: #2ecc71;
+        }
+
+        .cube .skillFaces-3 {
+            transform: rotateY(-90deg) translate3d(0, 0, 115px);
+            background-color: #e74c3c;
+        }
+
+        .cube .skillFaces-4 {
+            transform: rotateY(90deg) translate3d(0, 0, 115px);
+            background-color: #f39c12;
+        }
+
+        .cube .skillFaces-5 {
+            transform: rotateX(90deg) translate3d(0, 0, 115px);
+            background-color: #9b59b6;
+        }
+
+        .cube .skillFaces-6 {
+            transform: rotateX(-90deg) translate3d(0, 0, 115px);
+            background-color: #34495e;
+        }
+
+        .cube-2 .skillFaces-1 {
+            transform: translate3d(0, 0, 100px);
+            background-color: #3498db;
+        }
+
+        .cube-2 .skillFaces-2 {
+            transform: rotateY(180deg) translate3d(0, 0, 100px);
+            background-color: #2ecc71;
+        }
+
+        .cube-2 .skillFaces-3 {
+            transform: rotateY(-90deg) translate3d(0, 0, 100px);
+            background-color: #e74c3c;
+        }
+
+        .cube-2 .skillFaces-4 {
+            transform: rotateY(90deg) translate3d(0, 0, 100px);
+            background-color: #f39c12;
+        }
+
+        .cube-2 .skillFaces-5 {
+            transform: rotateX(90deg) translate3d(0, 0, 100px);
+            background-color: #9b59b6;
+        }
+
+        .cube-2 .skillFaces-6 {
+            transform: rotateX(-90deg) translate3d(0, 0, 100px);
+            background-color: #34495e;
+        }
+
+
+        .cube:hover {
+            transform: rotateX(45deg) rotateY(45deg) scale(1.4);
+        }
+
+
+
+
+        @keyframes rotateCube {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+
+
+        .cube-container:hover .cube {
+            animation: rotateCube 5s infinite linear;
+        }
+
+        .cube-2 {
+            animation: rotateCube 5s infinite linear;
+        }
+
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="div-1">
+        <h3>Hover(Click) To Rotate Cube</h3>
+        <div class="cube-container">
+
+            <div class="cube">
+                <div class="face skillFaces-1">Front</div>
+                <div class="face skillFaces-2">Right</div>
+                <div class="face skillFaces-3">Back</div>
+                <div class="face skillFaces-4">Left</div>
+                <div class="face skillFaces-5">Top</div>
+                <div class="face skillFaces-6">Bottom</div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="cube-container">
+        <div class="cube-2">
+            <div class="face skillFaces-1">Front</div>
+            <div class="face skillFaces-2">Right</div>
+            <div class="face skillFaces-3">Back</div>
+            <div class="face skillFaces-4">Left</div>
+            <div class="face skillFaces-5">Top</div>
+            <div class="face skillFaces-6">Bottom</div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
