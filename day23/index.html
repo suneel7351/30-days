@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Currency Converter</title>
+    <script>
+        let baseCurrencySelect;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            baseCurrencySelect = document.getElementById("baseCurrency");
+            const targetCurrencySelect = document.getElementById("targetCurrency");
+            const resultDiv = document.getElementById("result");
+            const amountInput = document.getElementById("amount");
+
+
+            fetch(`https://v6.exchangerate-api.com/v6/fbc4434a1adf0035030d6685/latest/INR`)
+                .then(response => response.json())
+                .then(data => {
+                    const currencies = Object.keys(data.conversion_rates);
+                    currencies.forEach(currency => {
+                        const option1 = document.createElement("option");
+                        const option2 = document.createElement("option");
+                        option1.value = currency;
+                        option1.text = currency;
+                        option2.value = currency;
+                        option2.text = currency;
+                        baseCurrencySelect.add(option1);
+                        targetCurrencySelect.add(option2);
+                    });
+                })
+                .catch(error => console.error("Error fetching currencies:", error));
+        });
+
+        function convertCurrency() {
+            const baseCurrency = baseCurrencySelect.value;
+            const targetCurrencySelect = document.getElementById("targetCurrency");
+            const amountInput = document.getElementById("amount");
+            const resultDiv = document.getElementById("result");
+
+            const targetCurrency = targetCurrencySelect.value;
+            const amount = amountInput.value;
+
+            if (!baseCurrency || !targetCurrency || !amount) {
+                resultDiv.textContent = "Please select currencies and enter an amount.";
+                return;
+            }
+
+            fetch(`https://v6.exchangerate-api.com/v6/fbc4434a1adf0035030d6685/latest/${baseCurrency}`)
+                .then(response => response.json())
+                .then(data => {
+                    const exchangeRate = data.conversion_rates[targetCurrency];
+                    if (exchangeRate) {
+                        const convertedAmount = (amount * exchangeRate).toFixed(2);
+                        console.log(convertedAmount);
+                        resultDiv.textContent = `${amount} ${baseCurrency} = ${convertedAmount} ${targetCurrency}`;
+                    } else {
+                        resultDiv.textContent = "Exchange rate not available for the selected currencies.";
+                    }
+                })
+                .catch(error => console.error("Error fetching exchange rate:", error));
+        }
+    </script>
+</head>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    select,
+    input,
+    button {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #result {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>Currency Converter</h1>
+        <div>
+            <label for="baseCurrency">Base Currency:</label>
+            <select id="baseCurrency"></select>
+        </div>
+        <div>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount" oninput="convertCurrency()">
+        </div>
+        <div>
+            <label for="targetCurrency">Target Currency:</label>
+            <select id="targetCurrency"></select>
+        </div>
+        <div>
+            <button onclick="convertCurrency()">Convert</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+</body>
+
+</html>
